@@ -19,7 +19,7 @@ app.use(express.static(__dirname));
 
 
 //Socket
-io.on('connection', function(sata){
+io.on('connection', function(data){
   console.log(data)
   console.log('Socket connection')
   client.getInfo().then((help) => console.log(help)).catch(e => console.error(e));
