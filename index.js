@@ -19,16 +19,15 @@ app.use(express.static(__dirname));
 
 //Socket
 io.on('connection', function(data){
-  console.log(data.handshake.test)
-  console.log('Socket connection')
-  testing()
+  console.log(data.handshake)
+  connect()
 })
 
 io.on('error', (error)=>{
   console.error('Cought socket error', error)
 })
 
-function testing(){
+function connect(){
   console.log('testing')
   const client = new Client({host: process.env.SMILEY_URL, port: process.env.SMILEY_PORT, username: process.env.SMILEY_USER, password: process.env.SMILEY_PASS})
   console.log('got the client')
