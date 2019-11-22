@@ -24,6 +24,7 @@ app.use(express.static(__dirname));
 //Socket
 io.on('connection', function(data){
   console.log(data.handshake.headers.query.username)
+  console.log(data.handshake)
   const username = data.handshake.headers.query.username
   connectUser(username)
 })
