@@ -6,6 +6,9 @@ const cors = require('cors')
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
 
+const {
+  connectUser
+} = require('./handler')
 
 //Smileycoin
 const client = new Client({host: process.env.SMILEY_URL, port: process.env.SMILEY_PORT, username: process.env.SMILEY_USER, password: process.env.SMILEY_PASS})
@@ -20,8 +23,9 @@ app.use(express.static(__dirname));
 
 //Socket
 io.on('connection', function(data){
-  console.log(data.handshake)
-  connect()
+  console.log(data.handshake.headers.query.username)
+  const username = data.handshake.headers.query.username
+  connectUser(username);
 })
 
 io.on('error', (error)=>{
@@ -37,6 +41,6 @@ function connect(){
 
 
 
-const server = http.listen(process.env.PORT || 4000, ()=>{
+const server = http.listen(process.env.PORT || 3000, '0.0.0.0', ()=>{
   console.log('jeboddy')
 })
