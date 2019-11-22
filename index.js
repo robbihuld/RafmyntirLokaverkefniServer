@@ -8,6 +8,7 @@ const io = require('socket.io')(http)
 
 
 //Smileycoin
+const client = new Client({host: process.env.SMILEY_URL, port: process.env.SMILEY_PORT, username: process.env.SMILEY_USER, password: process.env.SMILEY_PASS})
 
 //Express
 
@@ -29,10 +30,7 @@ io.on('error', (error)=>{
 
 function connect(){
   console.log('testing')
-  const client = new Client({host: process.env.SMILEY_URL, port: process.env.SMILEY_PORT, username: process.env.SMILEY_USER, password: process.env.SMILEY_PASS})
-  console.log('got the client')
   client.getInfo().then((help) => console.log(help)).catch(e => console.error('error smiley', e));
-  console.log('done')
 }
 
 
