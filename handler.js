@@ -1,6 +1,7 @@
 const {
   getUser,
-  connectUserDb
+  connectUserDb,
+  createUserDb
 } = require('./database/dbFunctions.js')
 
 let io;
