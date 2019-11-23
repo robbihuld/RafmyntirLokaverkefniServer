@@ -53,7 +53,7 @@ io.on('connection', socket => {
 //Router
 app.post('/notify', (req, res)=>{
   console.log('notifying!')
-  console.log(req.params)
+  console.log(req.query)
   return res.status(200);
 });
 
