@@ -17,7 +17,7 @@ async function disconnectUserDb(username){
 }
 
 async function insertCurrentLocationDb(lat, long, username){
-  return await query('UPDATE users SET lat = $1, long $2 WHERE username = $3', [lat, long, username])
+  return await query('UPDATE users SET lat = $1, long = $2 WHERE username = $3', [lat, long, username])
 }
 
 module.exports = {
