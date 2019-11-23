@@ -6,19 +6,19 @@ const {
   insertCurrentLocationDb
 } = require('./database/dbFunctions.js')
 
-let io;
+let socket;
 let smileyClient
 
-async function connectUser(username, myIo, mySmileyClient){
+async function connectUser(username, mySocket, mySmileyClient){
   const user = await getUser(username);
-  io = myIo
+  socket = mySocket
   smileyClient = mySmileyClient
 
   if(user.rowCount === 0){
     console.log('create user')
     createUser(username)
   } else if(user.rows[0].connected) {
-    io.emit('userConnected')
+    socket.emit('userConnected')
     return
   } else {
     //connect user
@@ -26,7 +26,7 @@ async function connectUser(username, myIo, mySmileyClient){
   }
 
   console.log('about to login')
-  myIo.emit('login')
+  socket.emit('login')
 }
 
 async function requestDirections(lat, long, username){
