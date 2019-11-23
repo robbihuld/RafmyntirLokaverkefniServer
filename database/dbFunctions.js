@@ -12,8 +12,18 @@ async function createUserDb(username, address){
   return await query('INSERT INTO users (username, address, connected) VALUES ($1, $2, true) RETURNING *', [username, address])
 }
 
+async function disconnectUserDb(username){
+  return await query('UPDATE users SET connected = false WHERE username = $1 RETURNING *', [username])
+}
+
+async function insertCurrentLocationDb(lat, long, username){
+  return await query('UPDATE users SET lat = $1, long $2 WHERE username = $3', [lat, long, username])
+}
+
 module.exports = {
   getUser,
   connectUserDb,
-  createUserDb
+  createUserDb,
+  disconnectUserDb,
+  insertCurrentLocationDb
 }

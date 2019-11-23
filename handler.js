@@ -1,7 +1,9 @@
 const {
   getUser,
   connectUserDb,
-  createUserDb
+  createUserDb,
+  disconnectUserDb,
+  insertCurrentLocationDb
 } = require('./database/dbFunctions.js')
 
 let io;
@@ -27,12 +29,21 @@ async function connectUser(username, myIo, mySmileyClient){
   myIo.emit('login')
 }
 
+async function requestDirections(lat, long, username){
+  await insertCurrentLocationDb(lat, long, username)
+}
+
 async function createUser(username){
   const address =  await smileyClient.getNewAddress('base')
   console.log(address)
   await createUserDb(username, address)
 }
 
+async function disconnectUser(username){
+  await disconnectUserDb(username);
+}
+
 module.exports = {
-  connectUser
+  connectUser,
+  disconnectUser
 }

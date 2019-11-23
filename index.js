@@ -7,7 +7,9 @@ const http = require('http').Server(app)
 const io = require('socket.io')(http)
 
 const {
-  connectUser
+  connectUser,
+  disconnectUser,
+  requestDirections
 } = require('./handler')
 
 //Smileycoin
@@ -22,20 +24,24 @@ app.use(express.static(__dirname));
 
 
 //Socket
-io.on('connection', function(data){
+io.on('connection', data => {
   console.log(data.handshake.query)
   const username = data.handshake.query.username
   connectUser(username, io, smileyClient)
 })
 
+io.on('requestDirections', data => {
+  requestDirections(data.lat, data.long, data.username)
+})
+
+io.on('disconnectUser', data => {
+  disconnectUser(data.username)
+})  
+
 io.on('error', (error)=>{
   console.error('Cought socket error', error)
 })
 
-function connect(){
-  console.log('testing')
-  client.getInfo().then((help) => console.log(help)).catch(e => console.error('error smiley', e));
-}
 
 
 
