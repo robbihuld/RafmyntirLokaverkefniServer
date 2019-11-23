@@ -31,6 +31,7 @@ io.on('connection', data => {
 })
 
 io.on('requestDirections', data => {
+  console.log(data)
   requestDirections(data.lat, data.long, data.username)
 })
 

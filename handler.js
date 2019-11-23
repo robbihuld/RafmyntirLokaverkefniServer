@@ -45,5 +45,6 @@ async function disconnectUser(username){
 
 module.exports = {
   connectUser,
-  disconnectUser
+  disconnectUser,
+  requestDirections
 }
