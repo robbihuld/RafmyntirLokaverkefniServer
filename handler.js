@@ -3,7 +3,8 @@ const {
   connectUserDb,
   createUserDb,
   disconnectUserDb,
-  insertCurrentLocationDb
+  insertCurrentLocationDb,
+  getAddressForUserDb
 } = require('./database/dbFunctions.js')
 
 let socket;
@@ -31,6 +32,11 @@ async function connectUser(username, mySocket, mySmileyClient){
 
 async function requestDirections(lat, long, username){
   await insertCurrentLocationDb(lat, long, username)
+  const address = await getAddressForUserDb(username)
+  socket.emit('sendToAddress', {
+    address,
+    amount: 10
+  })
 }
 
 async function createUser(username){

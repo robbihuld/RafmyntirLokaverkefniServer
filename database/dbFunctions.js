@@ -20,10 +20,15 @@ async function insertCurrentLocationDb(lat, long, username){
   return await query('UPDATE users SET lat = $1, long = $2 WHERE username = $3', [lat, long, username])
 }
 
+async function getAddressForUserDb(username){
+  const result = query('SELECT address FROM users WHERE username = $1', [username]);
+}
+
 module.exports = {
   getUser,
   connectUserDb,
   createUserDb,
   disconnectUserDb,
-  insertCurrentLocationDb
+  insertCurrentLocationDb,
+  getAddressForUserDb
 }
