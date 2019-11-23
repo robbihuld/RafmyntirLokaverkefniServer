@@ -28,24 +28,20 @@ io.on('connection', data => {
   console.log(data.handshake.query)
   const username = data.handshake.query.username
   connectUser(username, io, smileyClient)
+
+  io.on('requestDirections', data => {
+    console.log(data)
+    requestDirections(data.lat, data.long, data.username)
+  })
+  
+  io.on('disconnectUser', data => {
+    disconnectUser(data.username)
+  })  
+  
+  io.on('error', (error)=>{
+    console.error('Cought socket error', error)
+  })
 })
-
-io.on('requestDirections', data => {
-  console.log(data)
-  requestDirections(data.lat, data.long, data.username)
-})
-
-io.on('disconnectUser', data => {
-  disconnectUser(data.username)
-})  
-
-io.on('error', (error)=>{
-  console.error('Cought socket error', error)
-})
-
-
-
-
 
 
 const server = http.listen(process.env.PORT || 3000, ()=>{
