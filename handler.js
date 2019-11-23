@@ -34,7 +34,7 @@ async function requestDirections(lat, long, username){
   await insertCurrentLocationDb(lat, long, username)
   const address = await getAddressForUserDb(username)
   socket.emit('sendToAddress', {
-    address,
+    address: address,
     amount: 10
   })
 }
