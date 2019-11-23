@@ -11,7 +11,7 @@ const {
 } = require('./handler')
 
 //Smileycoin
-const client = new Client({host: process.env.SMILEY_URL, port: process.env.SMILEY_PORT, username: process.env.SMILEY_USER, password: process.env.SMILEY_PASS})
+const smileyClient = new Client({host: process.env.SMILEY_URL, port: process.env.SMILEY_PORT, username: process.env.SMILEY_USER, password: process.env.SMILEY_PASS})
 
 //Express
 
@@ -25,7 +25,7 @@ app.use(express.static(__dirname));
 io.on('connection', function(data){
   console.log(data.handshake.query)
   const username = data.handshake.query.username
-  connectUser(username)
+  connectUser(username, io, smileyClient)
 })
 
 io.on('error', (error)=>{
@@ -41,6 +41,6 @@ function connect(){
 
 
 
-const server = http.listen(process.env.PORT || 3000, '0.0.0.0', ()=>{
+const server = http.listen(process.env.PORT || 3000, ()=>{
   console.log('jeboddy')
 })

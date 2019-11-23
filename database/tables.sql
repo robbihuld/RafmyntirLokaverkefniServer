@@ -1,7 +1,8 @@
 create table users(
   id serial primary key,
   username varchar(128) not null,
-  address varchar(256)
+  address varchar(256),
+  connected boolean default false
 );
 
 create table treasures(
