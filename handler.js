@@ -24,7 +24,7 @@ async function connectUser(username, myIo, mySmileyClient){
 }
 
 async function createUser(username){
-  const address = smileyClient.getNewAddress('base')
+  const address =  await smileyClient.getNewAddress('base')
   console.log(address)
   await createUserDb(username, address)
 }
