@@ -8,12 +8,12 @@ async function connectUserDb(username){
   return await query('UPDATE users SET connected = true WHERE username=$1', [username])
 }
 
-async function createUser(username, address){
+async function createUserDb(username, address){
   return await query('INSERT INTO users (username, address) VALUES ($1, $2) RETURNING *', [username, address])
 }
 
 module.exports = {
   getUser,
   connectUserDb,
-  createUser
+  createUserDb
 }
