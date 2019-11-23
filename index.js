@@ -33,6 +33,10 @@ io.on('connection', data => {
     console.log(data)
     requestDirections(data.lat, data.long, data.username)
   })
+
+  io.on('test',data => {
+    console.log('test')
+  })
   
   io.on('disconnectUser', data => {
     disconnectUser(data.username)
