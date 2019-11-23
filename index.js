@@ -27,7 +27,6 @@ app.use(express.static(__dirname));
 io.on('connection', data => {
   console.log(data.handshake.query)
   const username = data.handshake.query.username
-  connectUser(username, io, smileyClient)
 
   io.on('requestDirections', data => {
     console.log(data)
@@ -45,6 +44,9 @@ io.on('connection', data => {
   io.on('error', (error)=>{
     console.error('Cought socket error', error)
   })
+
+  connectUser(username, io, smileyClient)
+
 })
 
 
