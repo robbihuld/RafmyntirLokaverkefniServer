@@ -24,9 +24,9 @@ app.use(express.static(__dirname));
 
 
 //Socket
-io.on('connection', data => {
-  console.log(data.handshake.query)
-  const username = data.handshake.query.username
+io.on('connection', socket => {
+  console.log(socket.handshake.query)
+  const username = socket.handshake.query.username
   connectUser(username, io, smileyClient)
 
   socket.on('requestDirections', data => {
