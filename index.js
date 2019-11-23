@@ -27,26 +27,24 @@ app.use(express.static(__dirname));
 io.on('connection', data => {
   console.log(data.handshake.query)
   const username = data.handshake.query.username
+  connectUser(username, io, smileyClient)
 
-  io.on('requestDirections', data => {
+  socket.on('requestDirections', data => {
     console.log(data)
     requestDirections(data.lat, data.long, data.username)
   })
 
-  io.on('test',data => {
+  socket.on('test',data => {
     console.log('test')
   })
   
-  io.on('disconnectUser', data => {
+  socket.on('disconnectUser', data => {
     disconnectUser(data.username)
   })  
   
-  io.on('error', (error)=>{
+  socket.on('error', (error)=>{
     console.error('Cought socket error', error)
   })
-
-  connectUser(username, io, smileyClient)
-
 })
 
 
