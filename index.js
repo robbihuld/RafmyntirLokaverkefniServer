@@ -3,8 +3,7 @@ const Client = require('bitcoin-core');
 const express = require('express');
 const app = express();
 const cors = require('cors')
-const http = require('http').Server(app)
-const io = require('socket.io')(http)
+const socket = require('socket.io')
 
 const {
   connectUser,
@@ -21,12 +20,15 @@ const smileyClient = new Client({host: process.env.SMILEY_URL, port: process.env
 // app.use(express.json())
 // app.use(cors({origin: '*'}))
 // app.use(express.static(__dirname));
-const server = http.listen(process.env.PORT || 3000, ()=>{
+
+const server = app.listen(process.env.PORT || 3000, ()=>{
   console.log('jeboddy')
 })
 
+
 //Socket
-let socket;
+const io = socket(server)
+
 io.on('connection', socket => {
   console.log(socket.handshake.query)
   const username = socket.handshake.query.username
@@ -46,7 +48,6 @@ io.on('connection', socket => {
     console.error('Cought socket error', error)
   })
 
-  socket = socket;
 })
 
 //Router
