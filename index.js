@@ -54,6 +54,7 @@ io.on('connection', socket => {
 app.post('/notify', (req, res)=>{
   console.log('notifying!')
   console.log(req.query)
+  console.log(req.body)
   return res.status(200);
 });
 
