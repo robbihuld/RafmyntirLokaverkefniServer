@@ -22,7 +22,7 @@ async function insertCurrentLocationDb(lat, long, username){
 
 async function getAddressForUserDb(username){
   const result = await query('SELECT address FROM users WHERE username = $1', [username]);
-  return result.rows[0]
+  return result.rows[0].address
 }
 
 module.exports = {
