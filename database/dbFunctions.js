@@ -9,7 +9,7 @@ async function connectUserDb(username){
 }
 
 async function createUserDb(username, address){
-  return await query('INSERT INTO users (username, address) VALUES ($1, $2) RETURNING *', [username, address])
+  return await query('INSERT INTO users (username, address, connected) VALUES ($1, $2, true) RETURNING *', [username, address])
 }
 
 module.exports = {
