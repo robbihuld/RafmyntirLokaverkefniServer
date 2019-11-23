@@ -28,7 +28,7 @@ let socket;
 io.on('connection', socket => {
   console.log(socket.handshake.query)
   const username = socket.handshake.query.username
-  connectUser(username, socket, smileyClient)
+  connectUser(username, socket, smileyClient, socket.id)
 
   socket.on('requestDirections', data => {
     console.log(data)
@@ -47,6 +47,11 @@ io.on('connection', socket => {
   socket = socket;
 })
 
+//Router
+app.post('/notify', (req, res)=>{
+  console.log('notifying!')
+  console.log(req)
+});
 
 const server = http.listen(process.env.PORT || 3000, ()=>{
   console.log('jeboddy')

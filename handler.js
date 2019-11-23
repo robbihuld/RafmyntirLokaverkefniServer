@@ -10,20 +10,20 @@ const {
 let socket;
 let smileyClient
 
-async function connectUser(username, mySocket, mySmileyClient){
+async function connectUser(username, mySocket, mySmileyClient, socketId){
   const user = await getUser(username);
   socket = mySocket
   smileyClient = mySmileyClient
 
   if(user.rowCount === 0){
     console.log('create user')
-    createUser(username)
+    createUser(username, socketId)
   } else if(user.rows[0].connected) {
     socket.emit('userConnected')
     return
   } else {
     //connect user
-    await connectUserDb(username);
+    await connectUserDb(username, socketId);
   }
 
   console.log('about to login')
