@@ -17,11 +17,13 @@ const smileyClient = new Client({host: process.env.SMILEY_URL, port: process.env
 
 //Express
 
-app.use(express.urlencoded({ extended: true}))
-app.use(express.json())
-app.use(cors({origin: '*'}))
-app.use(express.static(__dirname));
-
+// app.use(express.urlencoded({ extended: true}))
+// app.use(express.json())
+// app.use(cors({origin: '*'}))
+// app.use(express.static(__dirname));
+const server = http.listen(process.env.PORT || 3000, ()=>{
+  console.log('jeboddy')
+})
 
 //Socket
 let socket;
@@ -53,6 +55,3 @@ app.post('/notify', (req, res)=>{
   console.log(req)
 });
 
-const server = http.listen(process.env.PORT || 3000, ()=>{
-  console.log('jeboddy')
-})
