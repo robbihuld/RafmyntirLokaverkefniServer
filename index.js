@@ -16,8 +16,8 @@ const smileyClient = new Client({host: process.env.SMILEY_URL, port: process.env
 
 //Express
 
-// app.use(express.urlencoded({ extended: true}))
-// app.use(express.json())
+app.use(express.urlencoded({ extended: true}))
+app.use(express.json())
 // app.use(cors({origin: '*'}))
 // app.use(express.static(__dirname));
 
