@@ -17,10 +17,14 @@ async function connectUser(username, myIo, mySmileyClient){
     createUser(username)
   } else if(user.rows[0].connected) {
     io.emit('userConnected')
+    return
   } else {
     //connect user
     await connectUserDb(username);
   }
+
+  console.log('about to login')
+  myIo.emit('login')
 }
 
 async function createUser(username){
