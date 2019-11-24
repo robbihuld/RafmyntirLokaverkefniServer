@@ -4,12 +4,12 @@ async function getUser(username) {
   return await query('SELECT * FROM users WHERE username=$1', [username])
 }
 
-async function connectUserDb(username) {
-  return await query('UPDATE users SET connected = true WHERE username=$1', [username])
+async function connectUserDb(username, socketId) {
+  return await query('UPDATE users SET connected = true, socketid = $1 WHERE username=$2', [socketId, username])
 }
 
-async function createUserDb(username, address) {
-  return await query('INSERT INTO users (username, address, connected) VALUES ($1, $2, true) RETURNING *', [username, address])
+async function createUserDb(username, address, socketId) {
+  return await query('INSERT INTO users (username, address, connected, socketid) VALUES ($1, $2, true, $3) RETURNING *', [username, address, socketId])
 }
 
 async function disconnectUserDb(username) {
@@ -38,10 +38,6 @@ async function getTreasuresDb(){
   return await query('SELECT * FROM treasures');
 }
 
-async function setSocketIdForUserDb(username, socketId){
-  return await query('UPDATE users SET socketid = $1 WHERE username = $2', [socketId, username])
-}
-
 module.exports = {
   getUser,
   connectUserDb,
@@ -51,6 +47,5 @@ module.exports = {
   getAddressForUserDb,
   setDirectionsRequestedDb,
   getUserByAddressDb,
-  getTreasuresDb,
-  setSocketIdForUserDb
+  getTreasuresDb
 }

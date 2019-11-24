@@ -28,10 +28,10 @@ const server = app.listen(process.env.PORT || 3000, ()=>{
 const io = socket(server)
 
 io.on('connection', socket => {
-  console.log(socket.id)
   console.log(socket.handshake.query)
+  console.log('socketId: ', socket.id)
   const username = socket.handshake.query.username
-  connectUser(username, socket, io)
+  connectUser(username, socket, io, socket.id)
 
   socket.on('requestDirections', data => {
     console.log(data)
@@ -46,11 +46,7 @@ io.on('connection', socket => {
   socket.on('error', (error)=>{
     console.error('Cought socket error', error)
   })
-
-  socket.on('connect', () => {
-    console.log(socket.id)
-    socketConnectedForUser(username, socket.id)
-  })
+  
 
 })
 

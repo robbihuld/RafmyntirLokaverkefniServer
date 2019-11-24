@@ -10,28 +10,27 @@ const {
   getAddressForUserDb,
   setDirectionsRequestedDb,
   getUserByAddressDb,
-  getTreasuresDb,
-  setSocketIdForUserDb
+  getTreasuresDb
 } = require('./database/dbFunctions.js')
 
 const smileyClient = new Client({host: process.env.SMILEY_URL, port: process.env.SMILEY_PORT, username: process.env.SMILEY_USER, password: process.env.SMILEY_PASS})
 
 let socket;
 let io;
-async function connectUser(username, mySocket, myIo){
+async function connectUser(username, mySocket, myIo, socketId){
   const user = await getUser(username);
   socket = mySocket
   io = myIo
 
   if(user.rowCount === 0){
     console.log('create user')
-    createUser(username)
+    createUser(username, socketId)
   } else if(user.rows[0].connected) {
     socket.emit('userConnected')
     return
   } else {
     //connect user
-    await connectUserDb(username);
+    await connectUserDb(username, socketId);
   }
 
   console.log('about to login')
@@ -49,10 +48,10 @@ async function requestDirections(lat, long, username){
   })
 }
 
-async function createUser(username){
+async function createUser(username, socketId){
   const address =  await smileyClient.getNewAddress('base')
   console.log(address)
-  await createUserDb(username, address)
+  await createUserDb(username, address, socketId)
 }
 
 async function disconnectUser(username){
@@ -86,14 +85,9 @@ async function paymentRecieved(txid){
   }
 }
 
-async function socketConnectedForUser(username, socketId){
-  await setSocketIdForUserDb(username, socketId)
-}
-
 module.exports = {
   connectUser,
   disconnectUser,
   requestDirections,
-  paymentRecieved,
-  socketConnectedForUser
+  paymentRecieved
 }
