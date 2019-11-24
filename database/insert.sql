@@ -1,1 +1,1 @@
-INSERT INTO treasures (latitude, longitude, amount) VALUES (64.067803, -21.934309, 100); 
+INSERT INTO treasures (latitude, longitude, amount) VALUES (64.0678211, -21.9344043, 100); 
