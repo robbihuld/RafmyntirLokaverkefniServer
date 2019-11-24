@@ -11,8 +11,8 @@ create table users(
 
 create table treasures(
   id serial primary key,
-  lat float,
-  long float,
+  latitude float,
+  longitude float,
   amount integer,
   found boolean default false
 );

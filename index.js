@@ -8,11 +8,10 @@ const socket = require('socket.io')
 const {
   connectUser,
   disconnectUser,
-  requestDirections
+  requestDirections,
+  paymentRecieved
 } = require('./handler')
 
-//Smileycoin
-const smileyClient = new Client({host: process.env.SMILEY_URL, port: process.env.SMILEY_PORT, username: process.env.SMILEY_USER, password: process.env.SMILEY_PASS})
 
 //Express
 
@@ -32,7 +31,7 @@ const io = socket(server)
 io.on('connection', socket => {
   console.log(socket.handshake.query)
   const username = socket.handshake.query.username
-  connectUser(username, socket, smileyClient, socket.id)
+  connectUser(username, socket, socket.id)
 
   socket.on('requestDirections', data => {
     console.log(data)
@@ -53,9 +52,7 @@ io.on('connection', socket => {
 //Router
 app.post('/notify', async (req, res) =>{
   console.log('notifying!')
-  console.log(req.body)
-  const transaction = await smileyClient.getTransaction(req.body.txid)
-  console.log(transaction)
+  paymentRecieved(req.body.txid);
   res.send(200);
 });
 

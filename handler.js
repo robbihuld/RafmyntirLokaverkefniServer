@@ -1,3 +1,4 @@
+const geolib = require('geolib')
 const {
   getUser,
   connectUserDb,
@@ -5,16 +6,18 @@ const {
   disconnectUserDb,
   insertCurrentLocationDb,
   getAddressForUserDb,
-  setDirectionsRequestedDb
+  setDirectionsRequestedDb,
+  getUserByAddressDb,
+  getTreasuresDb
 } = require('./database/dbFunctions.js')
 
 let socket;
-let smileyClient
+const smileyClient = new Client({host: process.env.SMILEY_URL, port: process.env.SMILEY_PORT, username: process.env.SMILEY_USER, password: process.env.SMILEY_PASS})
 
-async function connectUser(username, mySocket, mySmileyClient, socketId){
+
+async function connectUser(username, mySocket, socketId){
   const user = await getUser(username);
   socket = mySocket
-  smileyClient = mySmileyClient
 
   if(user.rowCount === 0){
     console.log('create user')
@@ -52,8 +55,31 @@ async function disconnectUser(username){
   await disconnectUserDb(username);
 }
 
+async function paymentRecieved(txid){
+  const transaction = await smileyClient.getTransaction(txid)
+  const amount = transaction.amount
+  const address = transaction.details[0].address
+
+  if(amount === 10){
+    const result = await getUserByAddressDb(address)
+    if(result.rowCount === 0){return;} //no user with this address
+    const user = result.rows[0]
+    if(!user.directionsrequested){return;} //the user did not request directions
+
+    await setDirectionsRequestedDb(user.username, false)
+    
+    //Find nearest treasure
+    const treasures = await getTreasuresDb()
+    const nearest = geolib.findNearest({latitude: user.lat, longitude: user.long}, treasures.rows)
+    console.log('nearest: ',nearest)
+    //Send user the general direction of treasure
+
+  }
+}
+
 module.exports = {
   connectUser,
   disconnectUser,
-  requestDirections
+  requestDirections,
+  paymentRecieved
 }

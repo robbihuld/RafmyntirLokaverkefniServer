@@ -29,6 +29,15 @@ async function setDirectionsRequestedDb(username, bool){
   return await query('UPDATE users SET directionsrequested = $1 WHERE username = $2', [bool, username]);
 }
 
+async function getUserByAddress(address){
+  const result = await query('SELECT * FROM users WHERE address = $1', [address]);
+  return result
+}
+
+async function getTreasuresDb(){
+  return await query('SELECT * FROM treasures');
+}
+
 module.exports = {
   getUser,
   connectUserDb,
@@ -36,5 +45,7 @@ module.exports = {
   disconnectUserDb,
   insertCurrentLocationDb,
   getAddressForUserDb,
-  setDirectionsRequestedDb
+  setDirectionsRequestedDb,
+  getUserByAddress,
+  getTreasuresDb
 }
