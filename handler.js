@@ -1,4 +1,6 @@
 const geolib = require('geolib')
+const Client = require('bitcoin-core');
+
 const {
   getUser,
   connectUserDb,

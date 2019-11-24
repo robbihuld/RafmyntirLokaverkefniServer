@@ -1,5 +1,4 @@
 require('dotenv').config()
-const Client = require('bitcoin-core');
 const express = require('express');
 const app = express();
 const cors = require('cors')
