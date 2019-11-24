@@ -47,6 +47,7 @@ io.on('connection', socket => {
   })
 
   socket.on('connect', () => {
+    console.log(socket.id)
     socketConnectedForUser(username, socket.id)
   })
 
