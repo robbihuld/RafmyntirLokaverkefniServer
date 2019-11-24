@@ -52,6 +52,6 @@ io.on('connection', socket => {
 app.post('/notify', async (req, res) =>{
   console.log('notifying!')
   paymentRecieved(req.body.txid);
-  res.send(200);
+  res.sendStatus(200);
 });
 
