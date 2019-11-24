@@ -30,7 +30,7 @@ const io = socket(server)
 io.on('connection', socket => {
   console.log(socket.handshake.query)
   const username = socket.handshake.query.username
-  connectUser(username, socket, io, socket.id)
+  connectUser(username, socket, io)
 
   socket.on('requestDirections', data => {
     console.log(data)
@@ -44,6 +44,10 @@ io.on('connection', socket => {
   
   socket.on('error', (error)=>{
     console.error('Cought socket error', error)
+  })
+
+  socket.on('connect', () => {
+    socketConnectedForUser(username, socket.id)
   })
 
 })
