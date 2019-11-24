@@ -28,6 +28,7 @@ const server = app.listen(process.env.PORT || 3000, ()=>{
 const io = socket(server)
 
 io.on('connection', socket => {
+  console.log(socket.id)
   console.log(socket.handshake.query)
   const username = socket.handshake.query.username
   connectUser(username, socket, io)
