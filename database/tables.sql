@@ -5,7 +5,8 @@ create table users(
   connected boolean default false,
   lat float default null,
   long float default null,
-  socketid varchar(256) default null
+  socketid varchar(256) default null,
+  directionsrequested boolean default false
 );
 
 create table treasures(

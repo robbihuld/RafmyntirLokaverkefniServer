@@ -51,10 +51,11 @@ io.on('connection', socket => {
 })
 
 //Router
-app.post('/notify', (req, res)=>{
+app.post('/notify', async (req, res) =>{
   console.log('notifying!')
-  console.log(req.query)
   console.log(req.body)
-  return res.status(200);
+  const transaction = await smileyClient.getTransaction(req.body.txid)
+  console.log(transaction)
+  res.send(200);
 });
 

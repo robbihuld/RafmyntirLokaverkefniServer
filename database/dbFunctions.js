@@ -25,11 +25,16 @@ async function getAddressForUserDb(username) {
   return result.rows[0].address
 }
 
+async function setDirectionsRequestedDb(username, bool){
+  return await query('UPDATE users SET directionsrequested = $1 WHERE username = $2', [bool, username]);
+}
+
 module.exports = {
   getUser,
   connectUserDb,
   createUserDb,
   disconnectUserDb,
   insertCurrentLocationDb,
-  getAddressForUserDb
+  getAddressForUserDb,
+  setDirectionsRequestedDb
 }
