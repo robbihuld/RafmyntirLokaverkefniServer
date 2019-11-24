@@ -13,13 +13,14 @@ const {
   getTreasuresDb
 } = require('./database/dbFunctions.js')
 
-let socket;
 const smileyClient = new Client({host: process.env.SMILEY_URL, port: process.env.SMILEY_PORT, username: process.env.SMILEY_USER, password: process.env.SMILEY_PASS})
 
-
-async function connectUser(username, mySocket, socketId){
+let socket;
+let io;
+async function connectUser(username, mySocket, myIo, socketId){
   const user = await getUser(username);
   socket = mySocket
+  io = myIo
 
   if(user.rowCount === 0){
     console.log('create user')
@@ -73,8 +74,13 @@ async function paymentRecieved(txid){
     //Find nearest treasure
     const treasures = await getTreasuresDb()
     const nearest = geolib.findNearest({latitude: user.lat, longitude: user.long}, treasures.rows)
-    console.log('nearest: ',nearest)
     //Send user the general direction of treasure
+    const direction = geolib.getCompassDirection(
+      {latitude: user.lat, longitude: user.long},
+      {latitude: nearest.latitude, longitude: nearest.longitude}
+      )
+
+    io.to(`${user.socketid}`).emit('directionToNearest', {direction: direction})
 
   }
 }
