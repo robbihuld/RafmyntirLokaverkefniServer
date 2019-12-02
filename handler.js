@@ -82,7 +82,8 @@ async function paymentRecieved(txid) {
 
     let distance = geolib.getDistance(
       {latitude: user.lat, longitude: user.long},
-      {latitude: nearest.latitude, longitude: nearest.longitude}
+      {latitude: nearest.latitude, longitude: nearest.longitude},
+      0.1
     )
 
     distance = Math.round(distance / 10) * 10
