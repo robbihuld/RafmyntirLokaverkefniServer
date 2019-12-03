@@ -8,7 +8,8 @@ const {
   connectUser,
   disconnectUser,
   requestDirections,
-  paymentRecieved
+  paymentRecieved,
+  dig
 } = require('./handler')
 
 
@@ -38,14 +39,19 @@ io.on('connection', socket => {
     requestDirections(data.lat, data.long, data.username)
   })
   
+  socket.on('dig', data => {
+    dig(data.lat, data.long, data.username)
+  })
+  
   socket.on('disconnectUser', data => {
     console.log(data)
     disconnectUser(data.username)
   })  
-  
+
   socket.on('error', (error)=>{
     console.error('Cought socket error', error)
   })
+
   
 
 })

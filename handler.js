@@ -93,9 +93,16 @@ async function paymentRecieved(txid) {
   }
 }
 
+async function dig(lat, long){
+  const treasures = await getTreasuredDb()
+  const nearest = geolib.findNearest({latitude: lat, longitude: long}, treasures.rows)
+  console.log(nearest)
+}
+
 module.exports = {
   connectUser,
   disconnectUser,
   requestDirections,
-  paymentRecieved
+  paymentRecieved,
+  dig
 }
