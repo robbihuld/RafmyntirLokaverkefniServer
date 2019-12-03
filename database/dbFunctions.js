@@ -38,6 +38,10 @@ async function getTreasuresDb(){
   return await query('SELECT * FROM treasures');
 }
 
+async function setFoundTreasureDb(id){
+  return await query('UPDATE treasures SET found = true WHERE id = $1', [id])
+}
+
 module.exports = {
   getUser,
   connectUserDb,
@@ -47,5 +51,6 @@ module.exports = {
   getAddressForUserDb,
   setDirectionsRequestedDb,
   getUserByAddressDb,
-  getTreasuresDb
+  getTreasuresDb,
+  setFoundTreasureDb
 }

@@ -10,7 +10,8 @@ const {
   getAddressForUserDb,
   setDirectionsRequestedDb,
   getUserByAddressDb,
-  getTreasuresDb
+  getTreasuresDb,
+  setFoundTreasureDb
 } = require('./database/dbFunctions.js')
 
 const smileyClient = new Client({ host: process.env.SMILEY_URL, port: process.env.SMILEY_PORT, username: process.env.SMILEY_USER, password: process.env.SMILEY_PASS })
@@ -74,6 +75,7 @@ async function paymentRecieved(txid) {
     //Find nearest treasure
     const treasures = await getTreasuresDb()
     const nearest = geolib.findNearest({ latitude: user.lat, longitude: user.long }, treasures.rows)
+    console.log(nearest)
     //Send user the general direction of treasure
     const direction = geolib.getCompassDirection(
       { latitude: user.lat, longitude: user.long },
@@ -93,10 +95,22 @@ async function paymentRecieved(txid) {
   }
 }
 
-async function dig(lat, long){
+async function dig(lat, long, username){
   const treasures = await getTreasuresDb()
   const nearest = geolib.findNearest({latitude: lat, longitude: long}, treasures.rows)
-  console.log(nearest)
+
+  const dist = geolib.getDistance(
+    { latitude: lat, longitude: long},
+    { latitude: nearest.latitude, longitude: nearest.longitude},
+    0.1
+  )
+
+  if(dist < 10){
+    await setFoundTreasureDb(nearest.id)
+    socket.emit('found', nearest)
+  } else {
+    socket.emit('notFound')
+  }
 }
 
 module.exports = {
