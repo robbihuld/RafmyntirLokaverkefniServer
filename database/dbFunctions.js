@@ -35,6 +35,7 @@ async function getUserByAddressDb(address){
 }
 
 async function getTreasuresDb(){
+  //todo where found = false
   return await query('SELECT * FROM treasures');
 }
 

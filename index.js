@@ -9,7 +9,8 @@ const {
   disconnectUser,
   requestDirections,
   paymentRecieved,
-  dig
+  dig,
+  payUser
 } = require('./handler')
 
 
@@ -41,6 +42,10 @@ io.on('connection', socket => {
   
   socket.on('dig', data => {
     dig(data.lat, data.long, data.username)
+  })
+
+  socket.on('requestPayment', data => {
+    payUser(data.address, data.amount)
   })
   
   socket.on('disconnectUser', data => {

@@ -113,10 +113,14 @@ async function dig(lat, long, username){
   }
 }
 
+async function payUser(address, amount){
+  await sendToAddress(address, amount, 'SmileyTreasure')
+}
+
 module.exports = {
   connectUser,
   disconnectUser,
   requestDirections,
   paymentRecieved,
-  dig
+  dig,
 }
