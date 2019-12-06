@@ -123,4 +123,5 @@ module.exports = {
   requestDirections,
   paymentRecieved,
   dig,
+  payUser
 }
