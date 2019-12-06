@@ -21,7 +21,7 @@ app.use(express.json())
 // app.use(express.static(__dirname));
 
 const server = app.listen(process.env.PORT || 3000, ()=>{
-  console.log('jeboddy')
+  console.log('jebuddy')
 })
 
 
@@ -49,7 +49,7 @@ io.on('connection', socket => {
   })  
 
   socket.on('error', (error)=>{
-    console.error('Cought socket error', error)
+    console.error('Caught socket error', error)
   })
 
   
