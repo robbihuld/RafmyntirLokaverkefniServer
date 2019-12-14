@@ -35,8 +35,7 @@ async function getUserByAddressDb(address){
 }
 
 async function getTreasuresDb(){
-  //todo where found = false
-  return await query('SELECT * FROM treasures');
+  return await query('SELECT * FROM treasures WHERE found = false');
 }
 
 async function setFoundTreasureDb(id){

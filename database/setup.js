@@ -6,7 +6,7 @@ const util = require('util');
 const { query } = require('./db');
 
 const readFileAsync = util.promisify(fs.readFile);
-
+const generateTreasures = require('./treasuregenerator')
 
 async function main() {
   await query('DROP TABLE IF EXISTS users');
@@ -26,7 +26,7 @@ async function main() {
   try {
     console.info('Inserting data');
     const insert = await readFileAsync('./database/insert.sql');
-
+    await generateTreasures();
     await query(insert.toString('utf8'));
     console.info('Data inserted');
   } catch (e){
