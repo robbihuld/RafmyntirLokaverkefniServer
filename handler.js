@@ -50,13 +50,8 @@ async function requestDirections(lat, long, username) {
 }
 
 async function createUser(username, socketId) {
-  console.log('her')
   const address = await smileyClient.getNewAddress('base')
-  console.log(address)
-  console.log('after address')
   const result = await createUserDb(username, address, socketId)
-  console.log(result)
-  console.log('after result')
   return result
 }
 
