@@ -52,7 +52,7 @@ async function requestDirections(lat, long, username) {
 async function createUser(username, socketId) {
   const address = await smileyClient.getNewAddress('base')
   console.log(address)
-  await createUserDb(username, address, socketId)
+  return await createUserDb(username, address, socketId)
 }
 
 async function disconnectUser(username) {
