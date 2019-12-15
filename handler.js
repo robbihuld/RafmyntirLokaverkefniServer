@@ -25,7 +25,7 @@ async function connectUser(username, mySocket, myIo, socketId) {
 
   if (user.rowCount === 0) {
     console.log('create user')
-    createUser(username, socketId)
+    await createUser(username, socketId)
   } else if (user.rows[0].connected) {
     socket.emit('userConnected')
     return
