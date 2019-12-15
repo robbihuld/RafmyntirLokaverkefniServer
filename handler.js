@@ -25,7 +25,7 @@ async function connectUser(username, mySocket, myIo, socketId) {
 
   if (user.rowCount === 0) {
     console.log('create user')
-    await createUser(username, socketId)
+    createUser(username, socketId)
   } else if (user.rows[0].connected) {
     socket.emit('userConnected')
     return
@@ -50,9 +50,10 @@ async function requestDirections(lat, long, username) {
 }
 
 async function createUser(username, socketId) {
+  console.log('her')
   const address = await smileyClient.getNewAddress('base')
   console.log(address)
-  return await createUserDb(username, address, socketId)
+  await createUserDb(username, address, socketId)
 }
 
 async function disconnectUser(username) {
